@@ -56,3 +56,16 @@ can be represented in a simple json as -
         }
     ]
 }
+
+
+Building project:
+--------------------
+
+Use maven to build this project from pom.xml kept under root
+
+Executing project:
+---------------------
+
+Contains executable junit tests under src/test/java.
+
+An executable jar generated after the build process can be included in java modules to use this rule engine api. 
