@@ -29,6 +29,7 @@ public class RuleEngineServiceImpl implements RuleEngineService{
     }
 
     public boolean executeAllRules(Set<Product> products){
+        boolean evalResult = false;
         if(products!=null){
             // Execute rule engine on each product individually
             for(Product product : products){
@@ -36,11 +37,13 @@ public class RuleEngineServiceImpl implements RuleEngineService{
                 // is applicable
                 for(Rule rule : rules){
                     if(rule.execute(product)){
-                        return true;
+                        System.out.println("Evaluated to true for product "+product.getId());
+                        evalResult = true;
+                        break;
                     }
                 }
             }
         }
-        return false;
+        return evalResult;
     }
 }
