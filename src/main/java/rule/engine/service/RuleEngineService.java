@@ -1,35 +1,32 @@
 package rule.engine.service;
 
 import product.catalogue.entities.Product;
-import rule.engine.rule.entities.Rule;
+import rule.engine.action.entities.Action;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 import java.util.Set;
 
 /**
- * Created by shiven on 01-08-2015.
+ * Service exposed to users to add and evaluate rules
+ *
+ * Created by shiven on 02-08-2015.
  */
-public class RuleEngineService {
+public interface RuleEngineService {
+    /**
+     * Adds a new rule to the engine with the action being executed when
+     * associated condition is true
+     *
+     * @param conditionJson
+     * @param action
+     * @throws IOException
+     */
+    public void addRule(String conditionJson , Action action) throws IOException;
 
-    private List<Rule> rules = new ArrayList<Rule>();
-
-    public void addRule(Rule ruleToAdd){
-        rules.add(ruleToAdd);
-    }
-
-    public void executeAllRules(Set<Product> products){
-        if(products!=null){
-            // Execute rule engine on each product individually
-            for(Product product : products){
-                // Execute each rule until we find one that
-                // is applicable
-                for(Rule rule : rules){
-                    if(rule.execute(product)){
-                        break;
-                    }
-                }
-            }
-        }
-    }
+    /**
+     * Executes all rules and returns true after executing action on the first applicable one
+     * Returns false if none of the rules are applicable
+     *
+     * @param products
+     */
+    public boolean executeAllRules(Set<Product> products);
 }

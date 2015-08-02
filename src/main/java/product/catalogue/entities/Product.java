@@ -1,7 +1,7 @@
 package product.catalogue.entities;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by shiven on 01-08-2015.
@@ -12,7 +12,7 @@ public class Product {
     String name;
     Double price;
     Double specialPrice;
-    List<Category> categories = new ArrayList<Category>();
+    Set<Category> categories = new HashSet<Category>();
 
     public Product(int id, String name, Double price, Double specialPrice) {
         this.id = id;
@@ -51,6 +51,15 @@ public class Product {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isPartOfCategorySet(int categoryId){
+        for(Category category : categories){
+            if(category !=null && category.getId() == categoryId){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void addCategory(Category category){

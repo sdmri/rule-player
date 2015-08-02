@@ -18,7 +18,24 @@ public class ComplexConditionExpression implements ConditionExpression {
 
     @Override
     public boolean evaluate(Product product) {
-        return false;
+        boolean result = false;
+        for(ConditionExpression conditionExpression : conditionExpressions){
+            result = conditionExpression.evaluate(product);
+            if(Operator.AND == conditionExpression.getOperator() && !result){
+                // If this condition expression evaluates to false and the next condition is AND'ed
+                // return
+                return false;
+            }else if(Operator.OR == conditionExpression.getOperator() && result) {
+                // if current condition is true and the next expression is OR'ed , do not evaluate further
+                return true;
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public Operator getOperator() {
+        return operator;
     }
 
     public void addConditionExpression(ConditionExpression conditionExpression) {

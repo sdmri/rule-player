@@ -14,14 +14,16 @@ public class SimpleConditionExpression implements ConditionExpression{
     @JsonProperty("op")
     Operator operator;
 
-    public boolean evaluateExpression(Product product){
-        return false;
+    @Override
+    public boolean evaluate(Product product){
+        return conditionType.evaluate(product);
     }
 
     public ConditionType getConditionType() {
         return conditionType;
     }
 
+    @Override
     public Operator getOperator() {
         return operator;
     }
@@ -32,11 +34,6 @@ public class SimpleConditionExpression implements ConditionExpression{
 
     public void setOperator(Operator operator) {
         this.operator = operator;
-    }
-
-    @Override
-    public boolean evaluate(Product product) {
-        return false;
     }
 
     @Override

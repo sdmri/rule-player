@@ -1,22 +1,32 @@
 package rule.engine.condition.entities;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import product.catalogue.entities.Product;
 
 /**
  * Created by shiven on 02-08-2015.
  */
-public class CartTotal implements ConditionType {
+public class CartTotalConditionType implements ConditionType {
     @JsonProperty("val")
     private double value;
     @JsonProperty("fop")
     private FilterOperator filterOperator;
 
-    public CartTotal() {
+    public CartTotalConditionType() {
     }
 
-    public CartTotal(double value, FilterOperator filterOperator) {
+    public CartTotalConditionType(double value, FilterOperator filterOperator) {
         this.value = value;
         this.filterOperator = filterOperator;
+    }
+
+    @Override
+    public boolean evaluate(Product product) {
+        if(FilterOperator.GT == filterOperator){
+            return product.getSpecialPrice()>value;
+        }else {
+            return product.getSpecialPrice()<value;
+        }
     }
 
     public double getValue() {
@@ -48,10 +58,10 @@ public class CartTotal implements ConditionType {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CartTotal cartTotal = (CartTotal) o;
+        CartTotalConditionType cartTotalConditionType = (CartTotalConditionType) o;
 
-        if (Double.compare(cartTotal.value, value) != 0) return false;
-        if (filterOperator != cartTotal.filterOperator) return false;
+        if (Double.compare(cartTotalConditionType.value, value) != 0) return false;
+        if (filterOperator != cartTotalConditionType.filterOperator) return false;
 
         return true;
     }
@@ -65,5 +75,7 @@ public class CartTotal implements ConditionType {
         result = 31 * result + (filterOperator != null ? filterOperator.hashCode() : 0);
         return result;
     }
+
+
 }
 
